@@ -1,0 +1,63 @@
+version: '3'
+services:
+  nodeappfrontend:
+    container_name: node_pdf
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mysql
+      - expressapp
+    environment:
+      WAIT_HOSTS: mysql:3306
+      GOOGLE_ID:
+      GOOGLE_SECRET:
+      NEXTAUTH_URL:
+    networks:
+      - node-webapp-network
+    volumes:
+      - ./:/
+  expressapp:
+    container_name: node_pdf
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mysql
+    environment:
+      WAIT_HOSTS: mysql:3306
+      GOOGLE_ID:
+      GOOGLE_SECRET:
+      NEXTAUTH_URL:
+    networks:
+      - node-webapp-network
+    volumes:
+      - ./:/
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: rcdb
+    volumes:
+      - ./data/mysql_dev:/data/mongodb
+    networks:
+      - node-webapp-network
+
+volumes:
+  mysqlVolume:
+    driver: local
+
+networks:
+  node-webapp-network:
+    driver: bridge
