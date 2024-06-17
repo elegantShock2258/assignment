@@ -51,9 +51,7 @@ button {
   height: 25px;
   padding: 0 35px 0 25px;
   position: relative;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 .SelectItem[data-disabled] {
   color: var(--mauve-8);
@@ -95,4 +93,6 @@ button {
   background-color: white;
   color: var(--violet-11);
   cursor: default;
-}/*# sourceMappingURL=form.modules.css.map */
+}
+
+/*# sourceMappingURL=form.modules.css.map */
