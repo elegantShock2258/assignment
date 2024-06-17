@@ -1,5 +1,6 @@
 "use strict";
 const express = require("express");
+const cors = require("cors");
 const httpErrors = require("http-errors");
 const pino = require("pino");
 const pinoHttp = require("pino-http");
@@ -32,7 +33,31 @@ module.exports = function main(options, cb) {
   process.on("unhandledRejection", unhandledError);
 
   const app = express();
-
+  app.use(
+    cors({
+      origin: true,
+      optionsSuccessStatus: 200,
+      credentials: true,
+    }),
+  );
+  app.options(
+    "*",
+    cors({
+      origin: true,
+      optionsSuccessStatus: 200,
+      credentials: true,
+    }),
+  );
+  app.use(function (req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept",
+    );
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Origin");
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
+  });
   app.use(pinoHttp({ logger }));
 
   require("./routes")(app, opts);

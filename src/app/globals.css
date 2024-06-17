@@ -1,5 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/*# sourceMappingURL=globals.css.map */
+body {
+  width: 100vw;
+  height: 100vh;
+}/*# sourceMappingURL=globals.css.map */

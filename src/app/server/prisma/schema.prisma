@@ -1,4 +1,16 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model FormData {
+  Form          String  @db.VarChar(100)
+  Name          String? @db.VarChar(100)
+  ContactNumber BigInt? @db.UnsignedBigInt
+  CountryCode   String? @db.VarChar(100)
+  Id            BigInt  @id @default(autoincrement()) @db.UnsignedBigInt
 }
